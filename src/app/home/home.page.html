@@ -1,20 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<div class="weather">
+  <h1 class="weather_title">Weather App</h1>
+  <hr />
+  <div class="weather_contents">
+    <input
+      class="weather_search"
+      type="text"
+      placeholder="Enter any location"
+      #weatherInput
+      (keyup.enter)="getWeatherData(weatherInput.value)"
+    />
+    <div *ngIf="weatherData" class="weather_info">
+      <p class="weather_location">
+        {{(weatherData.name).toUpperCase()}},{{weatherData.sys.country}}
+      </p>
+      <p class="weather_date">{{current_date}}</p>
+      <h1 class="weather_degree">
+        {{Math.round(weatherData.main.temp)}}&deg;c
+      </h1>
+      <p class="weather_situation">{{weatherData.weather[0].main}}</p>
+      <p class="weather_humidity">Humidity : {{weatherData.main.humidity}}%</p>
+    </div>
   </div>
-</ion-content>
+</div>

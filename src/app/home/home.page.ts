@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,53 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  api = {
+    key: '91a2b9e221b9f519f80a96f8646b32eb',
+    base: 'https://api.openweathermap.org/data/2.5/',
+  };
 
-  constructor() {}
+  days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
 
+  months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  weatherData: any;
+  date = new Date();
+  Math = Math;
+
+  current_date = `${this.days[this.date.getDay()]} ${this.date.getDate()} ${
+    this.months[this.date.getMonth()]
+  } ${this.date.getFullYear()}`;
+
+  constructor() {
+    console.log('something happended');
+  }
+
+  async getWeatherData(value) {
+    let data = await fetch(
+      `${this.api.base}weather?q=${value}&units=metric&APPID=${this.api.key}`
+    ).then((data) => data.json());
+    console.log(data);
+    this.weatherData = data;
+  }
 }
