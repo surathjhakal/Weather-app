@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  currentOrientation: string;
   api = {
     key: '91a2b9e221b9f519f80a96f8646b32eb',
     base: 'https://api.openweathermap.org/data/2.5/',
@@ -46,7 +46,11 @@ export class HomePage {
     this.months[this.date.getMonth()]
   } ${this.date.getFullYear()}`;
 
-  constructor() {
+  constructor(private screenOrientation: ScreenOrientation) {
+    this.currentOrientation = this.screenOrientation.type;
+    this.screenOrientation.onChange().subscribe(() => {
+      this.currentOrientation = this.screenOrientation.type;
+    });
     console.log('something happended');
   }
 
